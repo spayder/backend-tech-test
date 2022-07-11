@@ -17,7 +17,7 @@ class CreateMetricsTable extends Migration
             $table->id();
             $table->string('slug')->index();
             $table->float('response_time');
-            $table->int('http_code');
+            $table->integer('http_code');
             $table->timestamps();
         });
     }

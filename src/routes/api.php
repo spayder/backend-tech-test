@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use Src\Metrics\Infrastructure\Actions\GetMetricsAction;
 use Src\Rides\Infrastucture\Actions\CreateRideAction;
 use Src\Rides\Infrastucture\Actions\FinishRideAction;
 
@@ -17,3 +18,5 @@ use Src\Rides\Infrastucture\Actions\FinishRideAction;
 
 Route::post('rides', CreateRideAction::class)->name('ride.create');
 Route::post('rides/{ride:uuid}/finish', FinishRideAction::class)->name('ride.finish');
+
+Route::get('metrics', GetMetricsAction::class)->name('metrics.get');
