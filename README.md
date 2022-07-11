@@ -1,35 +1,25 @@
-# Fresh Laravel installation, ready to start coding
+# Backend tech test
+This project is based on docker, so in order to run it you must have docker up and running on your local environment.
 
-### How to run the project on local environment (docker dependency):
+### How to run the project on local environment:
 1. Build and run the project
 
-   ``docker-compose up -d --build``
+   ``make build``
 2. Install framework dependencies
 
    ``docker-compose run --rm composer install``
-3. Generate secret key
+3. copy .env.example .env in ``src`` directory
+4. Generate secret key
 
    ``docker-compose run --rm php php artisan key:generate``
-4. copy .env.example .env in ``src`` directory
-5. In .env change the following params:
-    1. ``DB_DATABASE=fresh``
-    2. ``DB_USERNAME=fresh``
-    3. ``DB_PASSWORD=fresh_secret_password``
-    4. ``DB_HOST=db``
 
-6. At this stage we need to create the database. For that just run:
-``docker-compose run --rm php php artisan migrate``
+6. At this stage we need to migrate all the database tables. For that just run:
+``make migrateup``
 
 The application by default is listening on port ``8085`` so the url will be: ``localhost:8085``
 
-The application generates a ticket every minute and process all opened tickets every 5 minutes.
-For that we need to run the scheduler:
-
-``docker-compose run --rm php php artisan schedule:work``
-
-
 To run the tests, just execute:
-``docker-compose run --rm php ./vendor/bin/phpunit``
+``make test``
 
 To stop all containers run:
-``docker-compose stop``
+``make stop``

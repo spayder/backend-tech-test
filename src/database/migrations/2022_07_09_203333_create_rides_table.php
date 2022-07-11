@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateMetricsTable extends Migration
+class CreateRidesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,11 +13,13 @@ class CreateMetricsTable extends Migration
      */
     public function up()
     {
-        Schema::create('metrics', function (Blueprint $table) {
+        Schema::create('rides', function (Blueprint $table) {
             $table->id();
-            $table->string('slug')->index();
-            $table->float('response_time');
-            $table->int('http_code');
+            $table->uuid('uuid');
+            $table->string('user_id');
+            $table->string('vehicle_id');
+            $table->dateTime('finished_at')->nullable();
+            $table->integer('cost')->nullable();
             $table->timestamps();
         });
     }
@@ -29,6 +31,6 @@ class CreateMetricsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('metrics');
+        Schema::dropIfExists('rides');
     }
 }

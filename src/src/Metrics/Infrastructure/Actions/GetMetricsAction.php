@@ -2,7 +2,12 @@
 
 namespace Src\Metrics\Infrastructure\Actions;
 
-class GetMetricsAction
-{
+use App\Http\Controllers\Controller;
 
+class GetMetricsAction extends Controller
+{
+    public function __invoke()
+    {
+
+    }
 }

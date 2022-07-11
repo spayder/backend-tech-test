@@ -1,23 +1,27 @@
 <?php
 
+use Src\Rides\Domain\Ride;
 use function Pest\Faker\faker;
 
-it('creates a ride as expected', function() {
-    $userId = faker()->uuid;
-    $vehicleId = faker()->uuid;
+it('finishes a ride as expected', function() {
+    $ride = Ride::factory()->create([
+        'created_at' => now()->subMinutes(5)
+    ]);
 
-    $postData = [
-        'user_id' => $userId,
-        'vehicle_id' => $vehicleId,
-    ];
+    $this->assertNull($ride->finished_at);
+    $this->assertNull($ride->cost);
 
-    $this->post(route('ride.create'), $postData)
-        ->assertCreated();
+    $response = $this->post(route('ride.finish', $ride->uuid));
 
-    $this->assertDatabaseHas('rides', $postData);
+    $ride->refresh();
+
+    $this->assertNotNull($ride->finished_at);
+    $this->assertNotNull($ride->cost);
+
+    $response->assertJson($ride->toArray(), false);
 });
 
-it('throws an error if no user_id or vehicle_id is passed', function () {
-    $this->post(route('ride.create'), [])
-        ->assertSessionHasErrors(['vehicle_id', 'user_id']);
+it('throws a 404 exception if ride doesn\'t exists', function () {
+    $this->post(route('ride.finish', 'no-existent-uuid'))
+        ->assertNotFound();
 });

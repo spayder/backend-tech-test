@@ -1,13 +1,27 @@
 <?php
 
-namespace Src\Rides\Actions;
+namespace Src\Rides\Infrastucture\Actions;
 
 use App\Http\Controllers\Controller;
+use Src\Rides\Application\RidesRepository;
+use Src\Rides\Domain\Ride;
 
 class FinishRideAction extends Controller
 {
-    public function __invoke()
+    /**
+     * @var RidesRepository
+     */
+    private $ridesRepository;
+
+    public function __construct(RidesRepository $ridesRepository)
     {
-        dd('finish ride action');
+        $this->ridesRepository = $ridesRepository;
+    }
+
+    public function __invoke(Ride $ride)
+    {
+        return response()->json(
+            $this->ridesRepository->finish($ride)
+        );
     }
 }

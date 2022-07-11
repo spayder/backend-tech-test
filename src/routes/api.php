@@ -1,7 +1,8 @@
 <?php
 
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use Src\Rides\Infrastucture\Actions\CreateRideAction;
+use Src\Rides\Infrastucture\Actions\FinishRideAction;
 
 /*
 |--------------------------------------------------------------------------
@@ -13,3 +14,6 @@ use Illuminate\Support\Facades\Route;
 | is assigned the "api" middleware group. Enjoy building your API!
 |
 */
+
+Route::post('rides', CreateRideAction::class)->name('ride.create');
+Route::post('rides/{ride:uuid}/finish', FinishRideAction::class)->name('ride.finish');

@@ -3,9 +3,9 @@
 use Src\Rides\Domain\ValueObject\UserData;
 use function Pest\Faker\faker;
 
-it('user data returns user id', function () {
-    $userId = faker()->uuid;
-    $userData = UserData::from($userId);
+it('vehicle data returns vehicle id', function () {
+    $vehicleId = faker()->uuid;
+    $vehicleIdData = UserData::from($vehicleId);
 
-    $this->assertEquals($userData->getId(), $userId);
+    $this->assertEquals($vehicleIdData->getId(), $vehicleId);
 });

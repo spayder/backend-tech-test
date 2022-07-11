@@ -5,10 +5,11 @@ namespace Src\Rides\Application;
 use App\Contracts\EloquentRepositoryInterface;
 use Illuminate\Support\Str;
 use Src\Rides\Domain\Ride;
+use Src\Rides\Domain\RideCostCalculator;
 use Src\Rides\Domain\ValueObject\UserData;
 use Src\Rides\Domain\ValueObject\VehicleData;
 
-class RidesRepositoryInterface implements EloquentRepositoryInterface
+class RidesRepository implements EloquentRepositoryInterface
 {
     public function create(UserData $user, VehicleData $vehicle)
     {
@@ -17,5 +18,16 @@ class RidesRepositoryInterface implements EloquentRepositoryInterface
             'user_id' => $user->getId(),
             'vehicle_id' => $vehicle->getId(),
         ]);
+    }
+
+    public function finish(Ride $ride)
+    {
+        $costCalculator = app(RideCostCalculator::class);
+
+        $ride->finished_at = now();
+        $ride->cost = $costCalculator->calculate($ride);
+        $ride->save();
+
+        return $ride;
     }
 }
