@@ -20,7 +20,7 @@ class RidesRepository implements EloquentRepositoryInterface
         ]);
     }
 
-    public function finish(Ride $ride)
+    public function finish(Ride $ride): Ride
     {
         $costCalculator = app(RideCostCalculator::class);
 
