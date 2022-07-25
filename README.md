@@ -7,7 +7,7 @@ This project is based on docker, so in order to run it you must have docker up a
    ``make build``
 2. Install framework dependencies
 
-   ``docker-compose run --rm composer install``
+   ``make composer``
 3. copy .env.example .env in ``src`` directory
 4. Generate secret key
 
